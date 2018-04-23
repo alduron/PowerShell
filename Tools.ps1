@@ -342,3 +342,68 @@ Function New-SecureString{
         
     }
 }
+
+Function Invoke-APICall{
+    [CmdletBinding()]
+    Param(
+        [parameter(ParameterSetName="Default",Mandatory=$True)]
+        [parameter(ParameterSetName="Explicite",Mandatory=$True)]
+ 	    [Parameter(Mandatory=$True,ValueFromPipeline=$False,ValueFromPipelineByPropertyName = $False)]
+ 	    [String] $Command = "",
+         [parameter(ParameterSetName="Default",Mandatory=$False)]
+         [parameter(ParameterSetName="Explicite",Mandatory=$False)]
+        [String] $Token = "",
+        [parameter(ParameterSetName="Default",Mandatory=$False)]
+        [String] $Username = "",
+        [parameter(ParameterSetName="Default",Mandatory=$False)]
+        [String] $Password = "",
+        [parameter(ParameterSetName="Default",Mandatory=$False)]
+        [parameter(ParameterSetName="Explicite",Mandatory=$False)]
+        [Switch] $POST,
+        [parameter(ParameterSetName="Explicite",Mandatory=$False)]
+        [System.Collections.Hashtable] $BodyPayload
+    )
+    BEGIN{
+        $Method = "GET"
+
+        $Headers = @{}
+        if($Token){
+            $Headers['token'] = $Token
+        }
+        if(!$BodyPayload){
+            $Body = @{}
+            if($Username){
+                $Body['username'] = $Username
+            }
+            if($Password){
+                $Body['password'] = $Password
+            }
+        } else {
+            $Body = $BodyPayload
+        }
+
+        if($POST){
+            $Method = "POST"
+        }
+
+        $URI = "http://" + $Global:Config.APIRoot + $Command
+        Write-Log -Event -Message "The URI request made was $URI as a $Method method" -Type INF -Source "AutoPatch" -EventID 100
+    }
+    PROCESS{
+        Try{
+            $Data = Invoke-WebRequest -Uri $URI -Headers $Headers -Body $Body -Method $Method
+            $Response = ConvertFrom-Json -InputObject $Data.Content
+            if($Response.success -eq "True"){
+                Write-Log -Event -Message "The URI request was successful" -Type INF -Source "AutoPatch" -EventID 101
+            } else {
+                Write-Log -Event -Message "The URI request failed with the following error messages[$(ForEach-Object{$Response.Errors})]" -Type ERR -Source "AutoPatch" -EventID 102
+            }
+        } catch{
+            Write-log -Event -Message "The URI request operation failed with the following error[$($_.Exception.Message)]" -Type ERR -Source "AutoPatch" -EventID 103
+        }
+    }
+    END{
+        return $Response
+    }
+
+}
