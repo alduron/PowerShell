@@ -10,6 +10,8 @@ Do{
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
 	Remove-Variable CanUpdate -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowPhoto -Force -ErrorAction SilentlyContinue
+    Remove-Variable CanShowVideo -Force -ErrorAction SilentlyContinue
+    Remove-Variable CanShowWeb -Force -ErrorAction SilentlyContinue
     Remove-Variable Links -Force -ErrorAction SilentlyContinue
     Remove-Variable Link -Force -ErrorAction SilentlyContinue
     Remove-Variable FileTypesO -Force -ErrorAction SilentlyContinue
