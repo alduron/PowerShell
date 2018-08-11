@@ -114,5 +114,9 @@ if($DoOn -contains $DoingIndex){
 ##PROCESS UPDATE
 If($UpdatePath){
     $Script = $MyInvocation.InvocationName
-    $File = $WC.DownloadFile($UpdatePath,$env:TEMP)
+    $Name = Split-Path $Script -Leaf
+    $TempFile = "$env:TEMP\$Name"
+    Remove-Item $TempFile -Force
+    $File = $WC.DownloadFile($UpdatePath,$TempFile)
+    Copy-Item -Path $TempFile -Destination $Script -Force
 }
