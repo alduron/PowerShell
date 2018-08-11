@@ -1,4 +1,5 @@
 Do{
+    $CurrentVersion = "1.1"
     $Continue = $True
     ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
@@ -14,7 +15,7 @@ Do{
     Remove-Variable MediaPathO -Force -ErrorAction SilentlyContinue
     Remove-Variable Sleep -Force -ErrorAction SilentlyContinue
     Remove-Variable Kill -Force -ErrorAction SilentlyContinue
-    Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
+    Remove-Variable NewVersion -Force -ErrorAction SilentlyContinue
     
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
@@ -124,7 +125,7 @@ Do{
         Remove-Item $TempFile -Force
         $WC.DownloadFile($UpdatePath,$TempFile)
         $VersionString = Get-Content $TempFile -Tail 1
-        if($VersionString -notmatch $CurrentVersion){
+        if($CurrentVersion -notmatch $NewVersion){
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force    
         }
@@ -137,4 +138,3 @@ Do{
     ##WAIT
     Sleep -Seconds $Sleep
 } while($Continue)
-#Version=1.1
