@@ -1,9 +1,9 @@
 Do{
     #Start Loop
-    #TestNo 5
+    #TestNo 6
     
     Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
-    $CurrentVersion = "1.5"
+    $CurrentVersion = "1.6"
     $Continue = $True
     
     ##LoopClear
