@@ -132,6 +132,7 @@ Do{
         Remove-Item $TempFile -Force
         $WC.DownloadFile($UpdatePath,$TempFile)
         if($CurrentVersion -notmatch $NewVersion){
+            Write-Host "Current Version: $CurrentVersion || New Version $NewVersion"
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force
             Start-ScheduledTask -TaskName Task
