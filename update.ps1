@@ -1,6 +1,6 @@
 Do{
     #Start Loop
-    #TestNo 16
+    #TestNo 17
     
     ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
@@ -23,7 +23,7 @@ Do{
     Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
 	Remove-Variable Debug -Force -ErrorAction SilentlyContinue
     
-    $CurrentVersion = "1.16"
+    $CurrentVersion = "1.17"
     $Continue = $True
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
