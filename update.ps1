@@ -122,6 +122,7 @@ Do{
         $WC.DownloadFile($UpdatePath,$TempFile)
         $VersionString = Get-Content $TempFile -Tail 1
         if($VersionString -notmatch $CurrentVersion){
+            Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force    
         }
         
@@ -129,5 +130,8 @@ Do{
 
     ##SAFETY KILL
     if($Kill){$Continue = $false}
+
+    ##WAIT
+    Sleep -Seconds $Sleep
 } while($Continue)
-#Version=1.1
+#Version=1
