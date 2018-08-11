@@ -1,8 +1,7 @@
 Do{
     #Start Loop
-    #TestNo 3
     
-    $CurrentVersion = "1.3"
+    $CurrentVersion = "1.2"
     $Continue = $True
     
     ##LoopClear
@@ -131,7 +130,7 @@ Do{
         if($CurrentVersion -notmatch $NewVersion){
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force
-            Start-Job {Sleep -Seconds 10;&"$PSScriptRoot\Task.ps1"}
+            Start-Job {Start-ScheduledTask -TaskName Task}
             exit
         }
         
@@ -141,5 +140,5 @@ Do{
     Sleep -Seconds $Sleep
     
     ##SAFETY KILL
-    if(!$Kill){Start-ScheduledTask -TaskName Test}
+    if($Kill){$Continue = $false}
 } while($Continue)
