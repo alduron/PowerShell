@@ -131,7 +131,7 @@ Do{
         if($CurrentVersion -notmatch $NewVersion){
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force
-            Start-Job {Sleep -Seconds 10;Start-ScheduledTask -TaskName Test}
+            Start-Job {Sleep -Seconds 10;&"$PSScriptRoot\Task.ps1"}
             exit
         }
         
