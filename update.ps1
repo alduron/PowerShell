@@ -112,12 +112,16 @@ if($DoOn -contains $DoingIndex){
 }
 
 ##PROCESS UPDATE
-If($UpdatePath){
+If($CanUpdate){
     $Script = $MyInvocation.InvocationName
     $Name = Split-Path $Script -Leaf
     $TempFile = "$env:TEMP\$Name"
     Remove-Item $TempFile -Force
     $WC.DownloadFile($UpdatePath,$TempFile)
-    Copy-Item -Path $TempFile -Destination $Script -Force
+    $VersionString = Get-Content $TempFile -Tail 1
+    if($VersionString -notmatch $CurrentVersion){
+        Copy-Item -Path $TempFile -Destination $Script -Force    
+    }
+    
 }
 #Version=1
