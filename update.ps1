@@ -1,13 +1,14 @@
 Do{
     #Start Loop
-    #TestNo 5
+    #TestNo 4
     
     Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
-    $CurrentVersion = "1.5"
+    $CurrentVersion = "1.4"
     $Continue = $True
     
     ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
+	Remove-Variable CanUpdate -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowPhoto -Force -ErrorAction SilentlyContinue
     Remove-Variable Links -Force -ErrorAction SilentlyContinue
     Remove-Variable Link -Force -ErrorAction SilentlyContinue
