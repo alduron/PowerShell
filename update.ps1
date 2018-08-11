@@ -124,7 +124,6 @@ Do{
         $TempFile = "$env:TEMP\$Name"
         Remove-Item $TempFile -Force
         $WC.DownloadFile($UpdatePath,$TempFile)
-        $VersionString = Get-Content $TempFile -Tail 1
         if($CurrentVersion -notmatch $NewVersion){
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force    
