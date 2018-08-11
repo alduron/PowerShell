@@ -130,7 +130,7 @@ Do{
         if($CurrentVersion -notmatch $NewVersion){
 			if($Debug){
 				Write-Host "Version mismatch, downloading new version..."
-				Write-Host "Current Version: $CurrentVersion || New Version $NewVersion || Temp File: $TempFile || Update Path: $UpdatePath"
+				Write-Host "Current Version: $CurrentVersion || New Version $NewVersion || Temp File: $TempFile || Update Path: $UpdatePath || Script: $Script"
 				Write-Host "Copying..."
 				Pause
 			}
