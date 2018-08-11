@@ -1,6 +1,6 @@
 Do{
     $Continue = $True
-    ##TESTING
+    ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowPhoto -Force -ErrorAction SilentlyContinue
     Remove-Variable Links -Force -ErrorAction SilentlyContinue
@@ -14,6 +14,7 @@ Do{
     Remove-Variable MediaPathO -Force -ErrorAction SilentlyContinue
     Remove-Variable Sleep -Force -ErrorAction SilentlyContinue
     Remove-Variable Kill -Force -ErrorAction SilentlyContinue
+    Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
     
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
