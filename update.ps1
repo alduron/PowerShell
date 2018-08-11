@@ -12,6 +12,8 @@ Do{
     Remove-Variable RandPool -Force -ErrorAction SilentlyContinue
     Remove-Variable UpdatePath -Force -ErrorAction SilentlyContinue
     Remove-Variable MediaPathO -Force -ErrorAction SilentlyContinue
+    Remove-Variable Sleep -Force -ErrorAction SilentlyContinue
+    Remove-Variable Kill -Force -ErrorAction SilentlyContinue
     
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
