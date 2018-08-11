@@ -1,8 +1,8 @@
 Do{
     #Start Loop
-    #TestNo 5
+    #TestNo 2
     
-    $CurrentVersion = "1.5"
+    $CurrentVersion = "1.2"
     $Continue = $True
     
     ##LoopClear
@@ -131,7 +131,7 @@ Do{
         if($CurrentVersion -notmatch $NewVersion){
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force
-            Start-Job {Start-ScheduledTask -TaskName Task}
+            Start-ScheduledTask -TaskName Task
             exit
         }
         
