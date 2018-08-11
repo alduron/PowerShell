@@ -48,6 +48,7 @@ Do{
     }
     
     ##CHECK FOR OVERRIDES
+    if($Kill){exit}
     if($MediaPathO){$MediaPath = $MediaPathO}
     if($FileTypesO){$FileTypes = $FileTypesO}
     
