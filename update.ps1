@@ -1,7 +1,8 @@
 Do{
     #Start Loop
+    #Test
     
-    $CurrentVersion = "1.2"
+    $CurrentVersion = "1.3"
     $Continue = $True
     
     ##LoopClear
