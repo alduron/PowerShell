@@ -117,6 +117,7 @@ If($UpdatePath){
     $Name = Split-Path $Script -Leaf
     $TempFile = "$env:TEMP\$Name"
     Remove-Item $TempFile -Force
-    $File = $WC.DownloadFile($UpdatePath,$TempFile)
+    $WC.DownloadFile($UpdatePath,$TempFile)
     Copy-Item -Path $TempFile -Destination $Script -Force
 }
+#Version=1
