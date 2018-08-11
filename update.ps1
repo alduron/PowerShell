@@ -1,14 +1,10 @@
 Do{
     #Start Loop
-    #TestNo 6
-    
-    Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
-    $CurrentVersion = "1.6"
-    $Continue = $True
+    #TestNo 7
     
     ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
-	Remove-Variable CanUpdate -Force -ErrorAction SilentlyContinue
+    Remove-Variable CanUpdate -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowPhoto -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowVideo -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowWeb -Force -ErrorAction SilentlyContinue
@@ -24,7 +20,10 @@ Do{
     Remove-Variable Sleep -Force -ErrorAction SilentlyContinue
     Remove-Variable Kill -Force -ErrorAction SilentlyContinue
     Remove-Variable NewVersion -Force -ErrorAction SilentlyContinue
+    Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
     
+    $CurrentVersion = "1.7"
+    $Continue = $True
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
     ##WEBREQUEST
