@@ -2,6 +2,7 @@ Do{
     #Start Loop
     #TestNo 4
     
+    Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
     $CurrentVersion = "1.4"
     $Continue = $True
     
