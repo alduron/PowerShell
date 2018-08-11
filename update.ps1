@@ -1,6 +1,8 @@
+#Start Loop
 Do{
-    $CurrentVersion = "1.1"
+    $CurrentVersion = "1.2"
     $Continue = $True
+    
     ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
     Remove-Variable CanShowPhoto -Force -ErrorAction SilentlyContinue
