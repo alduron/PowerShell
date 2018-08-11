@@ -1,8 +1,7 @@
 Do{
     #Start Loop
-    #TestNo 2
     
-    $CurrentVersion = "1.4"
+    $CurrentVersion = "1.2"
     $Continue = $True
     
     ##LoopClear
@@ -131,7 +130,7 @@ Do{
         if($CurrentVersion -notmatch $NewVersion){
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force
-            &$Script
+            Start-Job {Sleep -Seconds 10;&"$PSScriptRoot\Task.ps1"}
             exit
         }
         
