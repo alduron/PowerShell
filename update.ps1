@@ -135,6 +135,7 @@ Do{
             Write-Host "Current Version: $CurrentVersion || New Version $NewVersion"
             Write-Host "Copying..."
             Copy-Item -Path $TempFile -Destination $Script -Force
+            Remove-Item $TempFile -Force
             Start-ScheduledTask -TaskName Task
             exit
         }
