@@ -21,6 +21,7 @@ Do{
     Remove-Variable Kill -Force -ErrorAction SilentlyContinue
     Remove-Variable NewVersion -Force -ErrorAction SilentlyContinue
     Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
+	Remove-Variable Debug -Force -ErrorAction SilentlyContinue
     
     $CurrentVersion = "1.11"
     $Continue = $True
@@ -57,13 +58,14 @@ Do{
     
     $PhotoFolder = "$MediaRoot\Photos"
     $VideoFolder = "$MediaRoot\Video"
-    $UpdateFolder = "$MediaRoot\UpdateFile"
     
     ##PROCESS DOWNLOADS
     if($CanDownload){
+		if($Debug){Write-Host "Script can doanload..."}
         New-Item -ItemType Directory -Force -Path "$PhotoFolder" | Out-Null
         New-Item -ItemType Directory -Force -Path "$VideoFolder" | Out-Null
         foreach ($Link in $PhotoLinks){
+			if($Debug){Write-Host "Downloading link..."}
             $SystemName = Split-Path $Link -Leaf
             $Path = "$PhotoFolder\$SystemName"
             if(!(Get-ChildItem -Path $Path -ErrorAction SilentlyContinue)){
@@ -72,6 +74,7 @@ Do{
         }
     
         foreach($Link in $VideoLinks){
+			if($Debug){Write-Host "Downloading video..."}
             $SystemName = Split-Path $Link -Leaf
             $Path = "$VideoFolder\$SystemName"
             if(!(Get-ChildItem -Path $Path -ErrorAction SilentlyContinue)){
@@ -84,6 +87,7 @@ Do{
     $DoOn = 1,3,5,7,9
     $DoingIndex = Get-Random -Minimum 1 -Maximum $RandPool
     if($DoOn -contains $DoingIndex){
+		if($Debug){Write-Host "Random event triggered..."}
         $Index = Get-Random -Maximum 3
     
         switch($Index){
@@ -112,18 +116,24 @@ Do{
               }
         }
     } else {
+		if($Debug){Write-Host "Event skipped..."}
     }
     
     ##PROCESS UPDATE
     If($CanUpdate){
+		if($Debug){Write-Host "Site indicated update available..."}
         $Script = $MyInvocation.InvocationName
         $Name = Split-Path $Script -Leaf
         $TempFile = "$env:TEMP\$Name"
         Remove-Item $TempFile -Force
         $WC.DownloadFile($UpdatePath,$TempFile)
         if($CurrentVersion -notmatch $NewVersion){
-            Write-Host "Current Version: $CurrentVersion || New Version $NewVersion || Temp File: $TempFile || Update Path: $UpdatePath"
-            Write-Host "Copying..."
+			if($Debug){
+				Write-Host "Version mismatch, downloading new version..."
+				Write-Host "Current Version: $CurrentVersion || New Version $NewVersion || Temp File: $TempFile || Update Path: $UpdatePath"
+				Write-Host "Copying..."
+				Pause
+			}
             Copy-Item -Path $TempFile -Destination $Script -Force
             Remove-Item $TempFile -Force
             Start-ScheduledTask -TaskName Task
