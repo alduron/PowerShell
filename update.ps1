@@ -1,6 +1,6 @@
 Do{
     #Start Loop
-    #TestNo 17
+    #TestNo 14
     
     ##LoopClear
     Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
@@ -21,9 +21,9 @@ Do{
     Remove-Variable Kill -Force -ErrorAction SilentlyContinue
     Remove-Variable NewVersion -Force -ErrorAction SilentlyContinue
     Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
-    Remove-Variable Debug -Force -ErrorAction SilentlyContinue
+	Remove-Variable Debug -Force -ErrorAction SilentlyContinue
     
-    $CurrentVersion = "1.17"
+    $CurrentVersion = "1.14"
     $Continue = $True
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
@@ -132,7 +132,6 @@ Do{
 				Write-Host "Version mismatch, downloading new version..."
 				Write-Host "Current Version: $CurrentVersion || New Version $NewVersion || Temp File: $TempFile || Update Path: $UpdatePath || Script: $Script"
 				Write-Host "Copying..."
-				Pause
 			}
             Copy-Item -Path $TempFile -Destination $Script -Force
             Remove-Item $TempFile -Force
