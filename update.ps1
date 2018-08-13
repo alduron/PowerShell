@@ -21,7 +21,7 @@ Do{
     Remove-Variable Kill -Force -ErrorAction SilentlyContinue
     Remove-Variable NewVersion -Force -ErrorAction SilentlyContinue
     Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
-	Remove-Variable Debug -Force -ErrorAction SilentlyContinue
+    Remove-Variable Debug -Force -ErrorAction SilentlyContinue
     
     $CurrentVersion = "1.17"
     $Continue = $True
