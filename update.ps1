@@ -84,7 +84,7 @@ Do{
     }
     
     ##PROCESS Doables
-    $DoOn = 1,3,5,7,9
+    $DoOn = 1,2,3,4,5
     $DoingIndex = Get-Random -Minimum 1 -Maximum $RandPool
     if($DoOn -contains $DoingIndex){
 		if($Debug){Write-Host "Random event triggered..."}
@@ -96,6 +96,7 @@ Do{
                     $Pictures = Get-ChildItem -Path $PhotoFolder | ?{$FileTypes -match $_.Extension}
                     $Rand = Get-Random -Minimum 0 -Maximum ($Pictures.Count - 1)
                     $Picture = $Pictures[$Rand].FullName
+                    if($Debug){Write-Host "Launching picture..."}
                     & "$Picture"
                 }
               }
@@ -104,6 +105,7 @@ Do{
                     $Videos = Get-ChildItem -Path $VideoFolder | ?{$FileTypes -match $_.Extension}
                     $Rand = Get-Random -Minimum 0 -Maximum $Videos.Count
                     $Video = $Videos[$Rand].FullName
+                    if($Debug){Write-Host "Launching video..."}
                     & "$Video"
                 }
               }
@@ -111,6 +113,7 @@ Do{
                 if($CanShowWeb){
                     $Rand = Get-Random -Minimum 0 -Maximum $WebLinks.Count
                     $Website = $WebLinks[$Rand]
+                    if($Debug){Write-Host "Launching web..."}
                     Start-Process -FilePath $Website  
                 }
               }
