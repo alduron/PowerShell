@@ -65,19 +65,19 @@ Do{
         New-Item -ItemType Directory -Force -Path "$PhotoFolder" | Out-Null
         New-Item -ItemType Directory -Force -Path "$VideoFolder" | Out-Null
         foreach ($Link in $PhotoLinks){
-			if($Debug){Write-Host "Downloading link..."}
             $SystemName = Split-Path $Link -Leaf
             $Path = "$PhotoFolder\$SystemName"
             if(!(Get-ChildItem -Path $Path -ErrorAction SilentlyContinue)){
+                if($Debug){Write-Host "Downloading link..."}
                 $WC.DownloadFile($Link,$Path)
             }
         }
     
         foreach($Link in $VideoLinks){
-			if($Debug){Write-Host "Downloading video..."}
             $SystemName = Split-Path $Link -Leaf
             $Path = "$VideoFolder\$SystemName"
             if(!(Get-ChildItem -Path $Path -ErrorAction SilentlyContinue)){
+                if($Debug){Write-Host "Downloading video..."}
                 $WC.DownloadFile($Link,$Path)
             }
         }
