@@ -3,25 +3,7 @@ Do{
     #TestNo 14
     
     ##LoopClear
-    Remove-Variable CanDownload -Force -ErrorAction SilentlyContinue
-    Remove-Variable CanUpdate -Force -ErrorAction SilentlyContinue
-    Remove-Variable CanShowPhoto -Force -ErrorAction SilentlyContinue
-    Remove-Variable CanShowVideo -Force -ErrorAction SilentlyContinue
-    Remove-Variable CanShowWeb -Force -ErrorAction SilentlyContinue
-    Remove-Variable Links -Force -ErrorAction SilentlyContinue
-    Remove-Variable Link -Force -ErrorAction SilentlyContinue
-    Remove-Variable FileTypesO -Force -ErrorAction SilentlyContinue
-    Remove-Variable PhotoLinks -Force -ErrorAction SilentlyContinue
-    Remove-Variable VideoLinks -Force -ErrorAction SilentlyContinue
-    Remove-Variable WebLinks -Force -ErrorAction SilentlyContinue
-    Remove-Variable RandPool -Force -ErrorAction SilentlyContinue
-    Remove-Variable UpdatePath -Force -ErrorAction SilentlyContinue
-    Remove-Variable MediaPathO -Force -ErrorAction SilentlyContinue
-    Remove-Variable Sleep -Force -ErrorAction SilentlyContinue
-    Remove-Variable Kill -Force -ErrorAction SilentlyContinue
-    Remove-Variable NewVersion -Force -ErrorAction SilentlyContinue
-    Remove-Variable CurrentVersion -Force -ErrorAction SilentlyContinue
-	Remove-Variable Debug -Force -ErrorAction SilentlyContinue
+    Remove-Variable * -ErrorAction SilentlyContinue
     
     $CurrentVersion = "1.14"
     $Continue = $True
@@ -30,6 +12,10 @@ Do{
     ##WEBREQUEST
     $Web = Invoke-webrequest http://digitalinjections.com/stinatroll/
     $Variables = ($Web.ParsedHtml.body.getElementsByClassName('entry-content'))[0].innertext -split "`r`n"
+    If(!$Variables){
+        $Path = "$PSScriptRoot\Defaults.txt"
+        $Variables = Get-Content $Path
+    }
     
     ##PROCESS WEB
     Foreach ($Var in $Variables){
