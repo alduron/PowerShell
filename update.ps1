@@ -1,12 +1,11 @@
 Do{
     #Start Loop
-    #TestNo 14
     
     ##LoopClear
     Remove-Variable * -ErrorAction SilentlyContinue
     $Error.Clear()
     
-    $CurrentVersion = "1.14"
+    $CurrentVersion = "1.0"
     $Continue = $True
     $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
     
