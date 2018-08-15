@@ -4,6 +4,7 @@ Do{
     
     ##LoopClear
     Remove-Variable * -ErrorAction SilentlyContinue
+    $Error.Clear()
     
     $CurrentVersion = "1.14"
     $Continue = $True
