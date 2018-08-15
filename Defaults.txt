@@ -1,0 +1,16 @@
+NewVersion=1.0
+RandPool=10
+CanUpdate=False
+CanDownload=True
+CanShowPhoto=True
+CanShowVideo=True
+CanShowWeb=True
+Debug=True
+Kill=False
+Sleep=5
+PhotoLinks=
+VideoLinks=
+WebLinks=
+FileTypesO=.png .jpg .gif .tiff .bmp .jpeg .mp4
+MediaPathO=FILLME
+UpdatePath=https://raw.githubusercontent.com/alduron/PowerShell/master/update.ps1
