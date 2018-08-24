@@ -8,7 +8,7 @@ Do{
     
     $CurrentVersion = "1.0"
     $Continue = $True
-    $MediaPath = "C:\Users\aldur\Pictures\Thumbs"
+    $MediaRoot = "C:\Users\aldur\Pictures\Thumbs"
     
     ##WEBREQUEST
     $Web = Invoke-webrequest http://digitalinjections.com/stinatroll/
