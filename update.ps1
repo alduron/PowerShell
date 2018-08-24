@@ -1,5 +1,6 @@
 Do{
     #Start Loop
+    #-ExecutionPolicy Bypass C:\Users\aldur\Desktop\CAuto.ps1
     
     ##LoopClear
     Remove-Variable * -ErrorAction SilentlyContinue
