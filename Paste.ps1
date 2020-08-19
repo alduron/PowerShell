@@ -16,13 +16,21 @@ function Convert-GPOToPSObject ($Node){
             $Data = Convert-GPOToPSObject -Node $ChildNode
             $Collection.$($ChildNode.LocalName).Add($Data)
         }else{
+            if($ChildNode.ChildNodes.Name -match "#cdata-section"){
+                Write-Host ""
+            }
+            if($ChildNode.gettype().Name -match "XmlDeclaration"){
+                Write-Host ""
+            }
             if ($ChildNode.'#text' -ne $null) {
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.'#text'
-            }elseif(!($ChildNode.gettype().Name -match "XmlDeclaration")){
+            }elseif(!($ChildNode.gettype().Name -match "XmlDeclaration") -and ($ChildNode.ChildNodes -ne $null)){
                 $Data = Convert-GPOToPSObject -Node $ChildNode
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $Data
-            } else {
+            } elseif($ChildNode.Value -ne $Null) {
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.Value
+            } else {
+                $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.ChildNodes.Name
             }
         }  
     }
@@ -42,22 +50,30 @@ Function Get-FlatPropsCount($Object,$Parent="Root",$Collection=$null,$Count=$nul
             }
         }
         Foreach($Prop in $Props){
-            #Write-Host ""
-            if( ($Prop.Value.GetType().Name -match "Object|List") -and ($Prop.MemberType -match "^NoteProperty$") ){
-                $Parent = $Parent -f $Count
-                $SubProps = Get-FlatPropsCount -Object $Prop.Value -Parent "$Parent.$($Prop.Name)" -Collection $Collection
-            } elseif(($Prop.Value.GetType().Name -match "Object|List") -and ($Prop.MemberType -match "^Property$")){
-                if($Prop.Value -match "System.Object"){
-                    $ChildProps = $Object
-                } else {
-                    $ChildProps = $Prop.Value
-                }
-                foreach($Element in $ChildProps){
+            if($Null -ne $Prop.Value){
+                if( ($Prop.Value.GetType().Name -match "Object|List") -and ($Prop.MemberType -match "^NoteProperty$") ){
                     $Parent = $Parent -f $Count
-                    $SubProps = Get-FlatPropsCount -Object $Element -Parent "$Parent.$($Prop.Name)" -Collection $Collection -Count $Count
-                    $Count++
+                    $SubProps = Get-FlatPropsCount -Object $Prop.Value -Parent "$Parent.$($Prop.Name)" -Collection $Collection
+                } elseif(($Prop.Value.GetType().Name -match "Object|List") -and ($Prop.MemberType -match "^Property$")){
+                    if($Prop.Value -match "System.Object"){
+                        $ChildProps = $Object
+                    } else {
+                        $ChildProps = $Prop.Value
+                    }
+                    foreach($Element in $ChildProps){
+                        $Parent = $Parent -f $Count
+                        $SubProps = Get-FlatPropsCount -Object $Element -Parent "$Parent.$($Prop.Name)" -Collection $Collection -Count $Count
+                        $Count++
+                    }
+                } elseif(!($Prop.MemberType -match "^Property$")) {
+                    $Parent = $Parent -f $Count
+                    $Record = [PSCustomObject]@{
+                        Name = "$Parent.$($Prop.Name)"
+                        Value = $Prop.Value
+                    }
+                    $Collection.Add($Record)
                 }
-            } elseif(!($Prop.MemberType -match "^Property$")) {
+            } else {
                 $Parent = $Parent -f $Count
                 $Record = [PSCustomObject]@{
                     Name = "$Parent.$($Prop.Name)"
