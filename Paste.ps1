@@ -1,4 +1,4 @@
-function Convert-GPOToPSObject ($Node){
+function Convert-XMLToPSObject ($Node){
     $Collection = [PSCustomObject]@{}
     foreach($Attribute in $Node.attributes){
         $Collection | Add-Member -MemberType NoteProperty -Name $Attribute.Name -Value $Attribute.value
@@ -10,24 +10,18 @@ function Convert-GPOToPSObject ($Node){
                 $Children = [System.Collections.Generic.List[Object]]::new()
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $Children
             }
-            if ($ChildNode.'#text' -ne $null) {
+            if ($Null -ne $ChildNode.'#text') {
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.'#text'
             }
             $Data = Convert-GPOToPSObject -Node $ChildNode
             $Collection.$($ChildNode.LocalName).Add($Data)
         }else{
-            if($ChildNode.ChildNodes.Name -match "#cdata-section"){
-                Write-Host ""
-            }
-            if($ChildNode.gettype().Name -match "XmlDeclaration"){
-                Write-Host ""
-            }
-            if ($ChildNode.'#text' -ne $null) {
+            if ($Null -ne $ChildNode.'#text') {
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.'#text'
-            }elseif(!($ChildNode.gettype().Name -match "XmlDeclaration") -and ($ChildNode.ChildNodes -ne $null)){
+            }elseif(!($ChildNode.gettype().Name -match "XmlDeclaration") -and ($Null -ne $ChildNode.ChildNodes)){
                 $Data = Convert-GPOToPSObject -Node $ChildNode
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $Data
-            } elseif($ChildNode.Value -ne $Null) {
+            } elseif($Null -ne $ChildNode.Value) {
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.Value
             } else {
                 $Collection | Add-Member -MemberType NoteProperty -Name $ChildNode.LocalName -Value $ChildNode.ChildNodes.Name
@@ -37,7 +31,7 @@ function Convert-GPOToPSObject ($Node){
     return $Collection
 }
 
-Function Get-FlatPropsCount($Object,$Parent="Root",$Collection=$null,$Count=$null){
+Function Get-FlatProps($Object,$Parent="Root",$Collection=$null,$Count=$null){
     if($Null -eq $Collection){
         $Collection = [System.Collections.Generic.List[Object]]::new()
     }
@@ -53,7 +47,7 @@ Function Get-FlatPropsCount($Object,$Parent="Root",$Collection=$null,$Count=$nul
             if($Null -ne $Prop.Value){
                 if( ($Prop.Value.GetType().Name -match "Object|List") -and ($Prop.MemberType -match "^NoteProperty$") ){
                     $Parent = $Parent -f $Count
-                    $SubProps = Get-FlatPropsCount -Object $Prop.Value -Parent "$Parent.$($Prop.Name)" -Collection $Collection
+                    $SubProps = Get-FlatProps -Object $Prop.Value -Parent "$Parent.$($Prop.Name)" -Collection $Collection
                 } elseif(($Prop.Value.GetType().Name -match "Object|List") -and ($Prop.MemberType -match "^Property$")){
                     if($Prop.Value -match "System.Object"){
                         $ChildProps = $Object
@@ -62,7 +56,7 @@ Function Get-FlatPropsCount($Object,$Parent="Root",$Collection=$null,$Count=$nul
                     }
                     foreach($Element in $ChildProps){
                         $Parent = $Parent -f $Count
-                        $SubProps = Get-FlatPropsCount -Object $Element -Parent "$Parent.$($Prop.Name)" -Collection $Collection -Count $Count
+                        $SubProps = Get-FlatProps -Object $Element -Parent "$Parent.$($Prop.Name)" -Collection $Collection -Count $Count
                         $Count++
                     }
                 } elseif(!($Prop.MemberType -match "^Property$")) {
