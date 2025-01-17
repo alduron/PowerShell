@@ -1,0 +1,99 @@
+Application Overview
+Architecture:
+
+The application is containerized and deployed across two Kubernetes containers:
+Frontend Service: JavaScript React application for user interaction and data visualization.
+Backend Service: Python Flask application for processing, logic, and generating SCIM queries.
+Data Workflow:
+
+The backend generates SCIM queries based on user inputs or pre-defined logic.
+The frontend, using Axios, directly sends the SCIM queries to an external SCIM API for execution and processes the results.
+Each query is executed using a per-user SCIM token to ensure accurate tracking and individual user accountability.
+Frontend (React)
+Purpose:
+
+Acts as the user-facing layer for interacting with the system.
+Displays data retrieved from external SCIM API endpoints or other backend processes.
+Key Features:
+
+User Input Handling:
+Collects parameters and preferences for SCIM query generation (e.g., search filters, resource types).
+SCIM Query Execution:
+Receives pre-constructed SCIM queries from the backend.
+Attaches a per-user SCIM token to each query before sending it to the SCIM API using Axios.
+Processes and displays the API responses in real-time.
+Authentication Integration:
+Retrieves and stores the user’s SCIM token securely upon login or session initialization.
+Ensures that all outgoing SCIM API requests include the correct user token.
+Data Rendering:
+Visualizes SCIM API responses in tabular or graphical formats.
+Provides loading indicators and error messages for failed API calls.
+Styling and Theming:
+
+Utilizes Bootstrap for responsive and consistent styling across devices and themes.
+Supports dynamic theming based on user preferences or organizational branding.
+Backend (Python Flask)
+Purpose:
+
+Generates SCIM queries tailored to user inputs or application needs.
+Manages and validates SCIM tokens to ensure secure and user-specific query execution.
+Provides RESTful API endpoints to the frontend for query generation and additional logic.
+SCIM Query Generation:
+
+Constructs SCIM API-compatible queries, ensuring compliance with SCIM standards (e.g., filters, schemas, resource types).
+Validates user inputs or system requirements to produce accurate and efficient SCIM queries.
+SCIM Token Management:
+
+Verifies and maps SCIM tokens to individual users.
+Ensures that each query generated or executed is tied to the requesting user’s SCIM token.
+Provides endpoints to manage token lifecycle, including:
+/api/token/refresh: Refreshes expired tokens.
+/api/token/status: Checks the validity and scope of a user’s SCIM token.
+Endpoints:
+
+Query Builder:
+/api/scim-query: Accepts user input or default parameters and returns a pre-constructed SCIM query string or object.
+Utility Services:
+/api/query-options: Provides available options or schemas for SCIM resources to aid in query building.
+/api/logs: Tracks the history of SCIM queries or responses for auditing or troubleshooting.
+Security:
+
+Implements input sanitization to prevent injection attacks or malformed queries.
+Uses HTTPS, token-based authentication, and role-based access control (RBAC) for secure API communication.
+Encrypts SCIM tokens at rest and ensures secure transmission during user interactions.
+Workflow with Per-User SCIM Tokens
+User Login:
+
+Users authenticate and receive a unique SCIM token, which is securely stored (e.g., in memory or local storage).
+User Interaction:
+
+Users provide input via the frontend (e.g., selects filters, specifies SCIM resource types).
+Backend Query Generation:
+
+The frontend sends the user input to the backend using an API call.
+The backend constructs a SCIM-compatible query and returns it to the frontend.
+SCIM API Query Execution:
+
+The frontend attaches the user’s SCIM token to the query.
+Sends the query to the external SCIM API using Axios.
+The SCIM API processes the request and associates it with the user via the provided token.
+Audit and Tracking:
+
+All queries are logged with the user’s SCIM token for auditing purposes.
+Admins can trace queries back to individual users for accountability.
+Response Handling:
+
+The SCIM API response is processed and displayed in the frontend.
+Benefits of Per-User SCIM Token Integration
+User Accountability:
+
+Ensures all SCIM queries are traceable to the specific user who initiated them.
+Supports auditing and troubleshooting by maintaining query logs tied to tokens.
+Enhanced Security:
+
+SCIM tokens enforce per-user access control, reducing the risk of unauthorized API usage.
+Tokens can include scopes or permissions to restrict actions based on user roles.
+Improved Scalability:
+
+The architecture allows multiple users to execute SCIM queries concurrently without interfering with one another.
+By integrating per-user SCIM tokens, the application enhances security, accountability, and flexibility in managing user-specific interactions with external SCIM APIs.
