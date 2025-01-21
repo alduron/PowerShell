@@ -1,0 +1,65 @@
+Project Features and Enhancements Outline
+Implemented Features
+Search Functionality:
+
+Simple search support for:
+Users
+Groups
+Computers
+GMSAs
+Advanced search support for:
+Users
+Groups
+Computers
+GMSAs
+Advanced attribute-based search criteria for:
+Users
+Groups
+Computers
+GMSAs
+Enhanced Search Usability:
+
+Contextual attributes for criteria selectors.
+Full support for all SCIM filter operations.
+Object Management:
+
+Object inspection modal for detailed SCIM data viewing.
+Outstanding Enhancements
+Search Experience Improvements:
+
+Search in Progress Feedback:
+Provide user feedback during asynchronous search operations.
+Notify users when search results are ready.
+Modal Enhancements:
+
+Object Inspection Modal Rework:
+Improve usability and reliability of the modal for displaying SCIM data.
+Replace or enhance the current TuxModal component.
+Search Functionality Expansion:
+
+Criteria-Only Searches:
+Allow searches to be conducted without a specific target object.
+May be deferred to post-release.
+Data Management:
+
+Export Options:
+Implement data export functionality.
+Determine example formats and processes.
+Support Features:
+
+Pages for:
+Requesting access.
+How-to guides and user support.
+Production Release Requirements
+Complete all remaining Outstanding Enhancements.
+Code Testing:
+Write Python code tests.
+Write JavaScript code tests.
+Pipeline Integration:
+Implement Jules Pipeline for build and deployment.
+Production Readiness:
+Configure and apply production SCIM tokens.
+Post-Release Enhancements
+Search Capabilities:
+Multi-type searching to handle diverse query types.
+Natural language search to improve user accessibility and ease of use.
